@@ -7,7 +7,7 @@ A trading platform for buy/sell crypto
 
 In the project directory, you can run:
 
-[See the live demo] 
+[https://trading-app-react.netlify.app/](See the live Demo)
 
 ### `yarn start`
 
