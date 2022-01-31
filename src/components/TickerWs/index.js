@@ -75,7 +75,7 @@ function TickerWs({ symbol }) {
                 <Grid md={2} xs={6} pb={5}>
                     <Typography color="mono.500" variant='body1'>Daily change</Typography>
                     <Box py={1} />
-                    <Typography color="mono.dark" variant="h5">{DAILY_CHANGE} ({(DAILY_CHANGE_RELATIVE * 100).toFixed(2)}%)</Typography>
+                    <Typography color={DAILY_CHANGE_RELATIVE < 0 ? 'error': 'primary'} variant="h5">{DAILY_CHANGE} ({(DAILY_CHANGE_RELATIVE * 100).toFixed(2)}%)</Typography>
                 </Grid>
                 {/* <Box pr={10} /> */}
                 <Grid md={2} xs={6} pb={5}>
@@ -118,7 +118,7 @@ function TickerWs({ symbol }) {
                     <Box display="flex" alignItems="center">
                         <Typography color="mono.dark" variant='h1'> {PAIR} {lastPrice}</Typography>
                         <Box pr={4} />
-                        <Typography color="primary" fontWeight={600} variant='body1'>{(percChange * 100).toFixed(2)}%</Typography>
+                        <Typography color="primary" color={percChange < 0 ? 'error': 'primary'}  fontWeight={600} variant='body1'>{(percChange * 100).toFixed(2)}%</Typography>
                     </Box>
                     <Box py={5} />
                     {tickerBlock}
