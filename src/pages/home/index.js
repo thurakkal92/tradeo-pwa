@@ -1,29 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from 'components/Header'
 import { Box, Container, Divider, Typography, Button, Pagination } from '@mui/material'
-import Card from 'components/Card';
+import TickersLoading from 'components/TickersList/Loading';
 import StarsRoundedIcon from '@mui/icons-material/StarsRounded';
 import { fetchTradingPairs } from 'api/tradingPairs'
+import TickersList from 'components/TickersList';
 
 function Home() {
-    async function _getTradingPairs() {
-        try{
-            const response = fetchTradingPairs('Tickers', 'symbols=ALL')
-        }
-        catch(e){
-            console.log(e)
-        }
-    }
-
-    // useEffect({
-        _getTradingPairs()
-    // })
-
-
     return (
         <>
             <Header />
-            <Divider />
             <Container>
                 <Box py={5} />
                 <Typography color="mono.dark" variant='h1'>Buy Bitcoin & other Crypto</Typography>
@@ -37,75 +23,7 @@ function Home() {
                 <Container>
                     <Typography color="mono.500" fontWeight={700} textAlign="center" component="h1" variant='h1'>All together at one place</Typography>
                     <Box py={5} />
-                    {/* <Divider /> */}
-                    <Box borderRadius={2} display="flex" bgcolor="white" px={4} justifyContent="space-between" py={3}>
-                        <Box display="flex" alignItems="center">
-                            <StarsRoundedIcon color="primary" />
-                            <Box pr={2} />
-                            <Typography fontWeight="700" variant='body1'>BTC/AED</Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                            <Box display="flex" flexDirection="column" alignItems="flex-end">
-                                <Typography fontWeight="700" variant='body2'>12,23000.00</Typography>
-                                <Box pr={2} />
-                                <Typography fontWeight="700" color="error" variant='body2'>+3.4%</Typography>
-                            </Box>
-                            <Box pr={10} />
-                            <Button color="primary" sx={{ padding: '8px 20px' }} size="medium" variant='contained' disableElevation>Trade</Button>
-                        </Box>
-                    </Box>
-                    <Box pt={1} />
-                    {/* <Divider /> */}
-                    <Box borderRadius={2} bgcolor="white" px={4} display="flex" justifyContent="space-between" py={3}>
-                        <Box display="flex" alignItems="center">
-                            <StarsRoundedIcon color="primary" />
-                            <Box pr={2} />
-                            <Typography fontWeight="700" variant='body1'>BTC/AED</Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                            <Box display="flex" flexDirection="column" alignItems="flex-end">
-                                <Typography fontWeight="700" variant='body2'>12,23000.00</Typography>
-                                <Box pr={2} />
-                                <Typography fontWeight="700" color="error" variant='body2'>+3.4%</Typography>
-                            </Box>
-                            <Box pr={10} />
-                            <Button color="primary" sx={{ padding: '8px 20px' }} size="medium" variant='contained' disableElevation>Trade</Button>
-                        </Box>
-                    </Box>
-                    <Box pt={1} />
-                    <Box borderRadius={2} bgcolor="white" px={4} display="flex" justifyContent="space-between" py={3}>
-                        <Box display="flex" alignItems="center">
-                            <StarsRoundedIcon color="primary" />
-                            <Box pr={2} />
-                            <Typography fontWeight="700" variant='body1'>BTC/AED</Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                            <Box display="flex" flexDirection="column" alignItems="flex-end">
-                                <Typography fontWeight="700" variant='body2'>12,23000.00</Typography>
-                                <Box pr={2} />
-                                <Typography fontWeight="700" color="error" variant='body2'>+3.4%</Typography>
-                            </Box>
-                            <Box pr={10} />
-                            <Button color="primary" sx={{ padding: '8px 20px' }} size="medium" variant='contained' disableElevation>Trade</Button>
-                        </Box>
-                    </Box>
-                    <Box pt={1} />
-                    <Box borderRadius={2} bgcolor="white" px={4} display="flex" justifyContent="space-between" py={3}>
-                        <Box display="flex" alignItems="center">
-                            <StarsRoundedIcon color="primary" />
-                            <Box pr={2} />
-                            <Typography fontWeight="700" variant='body1'>BTC/AED</Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                            <Box display="flex" flexDirection="column" alignItems="flex-end">
-                                <Typography fontWeight="700" variant='body2'>12,23000.00</Typography>
-                                <Box pr={2} />
-                                <Typography fontWeight="700" color="error" variant='body2'>+3.4%</Typography>
-                            </Box>
-                            <Box pr={10} />
-                            <Button color="primary" sx={{ padding: '8px 20px' }} size="medium" variant='contained' disableElevation>Trade</Button>
-                        </Box>
-                    </Box>
+                    <TickersList />
                     {/* <Divider /> */}
                     <Box py={2} />
                     <Box display="flex" justifyContent="center" textAlign="center">

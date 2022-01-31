@@ -1,4 +1,6 @@
 import Home from 'pages/home'
+import Trades from 'pages/trades'
+import TradesPage from 'pages/trades'
 
 export default [
     {
@@ -7,8 +9,8 @@ export default [
         exact: true
     },
     {
-        path: `/trade/:pair`,
-        element: <Home />,
+        path: `/trade/:symbol`,
+        element: <Trades />,
         exact: true
     },
 ]
