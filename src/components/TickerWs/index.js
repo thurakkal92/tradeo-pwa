@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Typography, Box } from '@mui/material'
+import React, { useState, useEffect, useContext } from 'react';
+import { Typography, Box, Grid } from '@mui/material'
 import { WS_BASE_URL } from 'constants/api'
 import { isEmpty ,stringFormat} from 'utils/browserHelper'
 import TickerWsLoading from './Loading';
+import {SymbolContext} from 'context/trades'
 
 function TickerWs({ symbol }) {
     let lastPrice = ''
     let percChange = ''
     let tickerBlock = ''
     let PAIR = stringFormat(symbol).split('/')[1] || ''
-
+    const [symbolContext, setSymbolContext] = useContext(SymbolContext)
     const [ ticker, setTicker ] = useState([])
     const [ loading, setLoading ] = useState(true)
     const ws = new WebSocket(WS_BASE_URL); //TODO : Write reusable custom hook for websocket
@@ -18,9 +19,14 @@ function TickerWs({ symbol }) {
         channel: 'ticker',
         symbol: symbol
     })
-    ws.onopen = (event) => {
-        ws.send(msgTicker);
-    };
+    useEffect(()=> {
+        if(symbol) {
+            ws.onopen = (event) => {
+                ws.send(msgTicker);
+            };
+        }
+    }, [symbol])
+    
     useEffect(() => {
         ws.onmessage = function (event) {
             const json = JSON.parse(event.data);
@@ -57,41 +63,45 @@ function TickerWs({ symbol }) {
         lastPrice = LAST_PRICE
         percChange = DAILY_CHANGE_RELATIVE
         tickerBlock = (
-            <Box display="flex" flexWrap="wrap" justifyContent="space-between" maxWidth={900}>
-                <Box pb={5}>
+            <Box marginX={5} >
+
+            
+            <Grid container spacing={5}>
+                <Grid md={2} xs={6} pb={5}>
                     <Typography color="mono.500" variant='body1'>Open price</Typography>
                     <Box py={1} />
                     <Typography color="mono.dark" variant="h5">{LOW}</Typography>
-                </Box>
-                <Box pb={5}>
+                </Grid>
+                <Grid md={2} xs={6} pb={5}>
                     <Typography color="mono.500" variant='body1'>Daily change</Typography>
                     <Box py={1} />
-                    <Typography color="mono.dark" variant="h5">{DAILY_CHANGE} ({DAILY_CHANGE_RELATIVE * 100}%)</Typography>
-                </Box>
+                    <Typography color="mono.dark" variant="h5">{DAILY_CHANGE} ({(DAILY_CHANGE_RELATIVE * 100).toFixed(2)}%)</Typography>
+                </Grid>
                 {/* <Box pr={10} /> */}
-                <Box pb={5}>
+                <Grid md={2} xs={6} pb={5}>
                     <Typography color="mono.500" variant='body1'>Top bid</Typography>
                     <Box py={1} />
                     <Typography color="mono.dark" variant="h5">{BID}</Typography>
-                </Box>
+                </Grid>
                 {/* <Box pr={10} /> */}
-                <Box pb={5}>
+                <Grid md={2} xs={6} pb={5}>
                     <Typography color="mono.500" variant='body1'>Top ask</Typography>
                     <Box py={1} />
                     <Typography color="mono.dark" variant="h5">{ASK}</Typography>
-                </Box>
+                </Grid>
                 {/* <Box pr={10} /> */}
-                <Box pb={5}>
+                <Grid md={2} xs={6} pb={5}>
                     <Typography color="mono.500" variant='body1'>Last price</Typography>
                     <Box py={1} />
                     <Typography color="mono.dark" variant="h5">{LAST_PRICE}</Typography>
-                </Box>
+                </Grid>
                 {/* <Box pr={10} /> */}
-                <Box pb={5}>
+                <Grid md={2} xs={6} pb={5}>
                     <Typography color="mono.500" variant='body1'>24hr range</Typography>
                     <Box py={1} />
                     <Typography color="mono.dark" variant="h5">{LOW} - {HIGH}</Typography>
-                </Box>
+                </Grid>
+            </Grid>
             </Box>
         )
     }
@@ -102,10 +112,13 @@ function TickerWs({ symbol }) {
                 <TickerWsLoading />
             ) : (
                 <>
+                    <Box py={2} />
+                    <Typography color="mono.500" variant="h5">MARKET STATS</Typography>
+                    <Box py={2} />
                     <Box display="flex" alignItems="center">
                         <Typography color="mono.dark" variant='h1'> {PAIR} {lastPrice}</Typography>
                         <Box pr={4} />
-                        <Typography color="primary" fontWeight={600} variant='body1'>{percChange * 100}%</Typography>
+                        <Typography color="primary" fontWeight={600} variant='body1'>{(percChange * 100).toFixed(2)}%</Typography>
                     </Box>
                     <Box py={5} />
                     {tickerBlock}

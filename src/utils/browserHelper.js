@@ -1,3 +1,4 @@
+
 export const isEmpty = obj => {
     if (obj instanceof Date) {
         return false
@@ -63,4 +64,19 @@ export const formatTime = (s) => {
       console.log('error', s);
       return '';
     }
+}
+
+export const formatNumber = (n, fixed)=> {
+    if(n && fixed) 
+       n = n.toFixed(2)
+    n = n.toString();
+    var pattern = /(-?\d+)(\d{3})/;
+    while (pattern.test(n))
+    n = n.replace(pattern, "$1,$2");
+    return n;
+}
+
+export const replaceQueryInUrl =(browserHistory,newPath)=> {
+    let currentUrl  =  `/trade/${newPath}`
+    browserHistory(currentUrl, {replace: false})
 }

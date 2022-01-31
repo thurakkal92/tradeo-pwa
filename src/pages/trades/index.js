@@ -1,17 +1,20 @@
 import React, {useState} from 'react';
-// import {TickersContext} from 'context/trades'
+import {TickersContext, SymbolContext} from 'context/trades'
 import TradesPage from './TradesPage';
 // import {API_STATES} from 'constants/api'
 // import {WS_BASE_URL} from 'constants/api'
 
 
 function Trades() {
-    // const tickersContextHook = useState({status: A/PI_STATES.PENDING, data: []})
+    const tickerscontextHook = useState([])
+    const symbolContexhook = useState({index: null, symbol: ''})
    
     return (
-        // <TickersContext.Provider value={tickersContextHook}>
+        <SymbolContext.Provider value={symbolContexhook}>
+        <TickersContext.Provider value={tickerscontextHook}>
             <TradesPage />
-        // </TickersContext.Provider>
+        </TickersContext.Provider>
+        </SymbolContext.Provider>
     )
 }
 
